@@ -30,6 +30,7 @@ iOS7, iOS8 and iOS9
 
 Screenshots
 ===========
+Screenshot taken in iOS9 iPhone6 simulator from Xcode7
 
 ![](https://raw.githubusercontent.com/ipraba/TableReloadingNotifier/master/Screenshots/Screen%20Shot%202015-10-30%20at%208.58.24%20am.png)
 

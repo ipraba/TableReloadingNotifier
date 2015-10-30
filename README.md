@@ -27,4 +27,8 @@ iOS7, iOS8 and iOS9
 Screenshots
 ===========
 
+![](https://raw.githubusercontent.com/ipraba/TableReloadingNotifier/master/Screenshots/Screen%20Shot%202015-10-30%20at%208.58.24%20am.png)
+
+![](https://raw.githubusercontent.com/ipraba/TableReloadingNotifier/master/Screenshots/Simulator%20Screen%20Shot%2030-Oct-2015%208.53.43%20am.png)
+
 

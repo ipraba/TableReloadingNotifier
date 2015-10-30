@@ -18,6 +18,10 @@ The solution would be to use the GCD after the tableview.reload is called
         })
 
  
+ How this works
+ ==============
+
+Basically when you do a reload the main thread becomes busy so at that time when we do a dispatch async thread, the block will wait till the main thread gets finished. So once the tableview has been loaded completely the main thread will gets finish and so it will dispatch our method block
 
 Tested Environments
 ===================

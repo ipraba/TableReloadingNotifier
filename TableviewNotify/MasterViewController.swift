@@ -19,12 +19,17 @@ class MasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "reload:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        for index in 0...10 {
+                objects.insert(NSDate(), atIndex: index)
+            }
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -37,12 +42,29 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//==================================================================================
+    func reload(sender: AnyObject) {
+        print("Reload button pressed")
+        self.tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            print("Reload Finished");
+        })
     }
-
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        print("Delete button pressed");
+        if editingStyle == .Delete {
+            objects.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                print("Visible cells \(tableView.visibleCells.count)")
+                print("Reload Finished");
+            })
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+//==================================================================================
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -72,6 +94,7 @@ class MasterViewController: UITableViewController {
 
         let object = objects[indexPath.row] as! NSDate
         cell.textLabel!.text = object.description
+        print("Cell created \(indexPath.row)")
         return cell
     }
 
@@ -80,14 +103,7 @@ class MasterViewController: UITableViewController {
         return true
     }
 
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
-    }
+
 
 
 }
